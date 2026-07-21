@@ -121,16 +121,50 @@ body:has(.overlay.open){overflow:hidden}
 @keyframes pulse{0%,100%{opacity:.6;transform:translateX(-50%) scale(1)}50%{opacity:1;transform:translateX(-50%) scale(1.1)}}
 .hero .photo{position:absolute;bottom:0;left:0;width:100%;height:auto;display:block;z-index:2}
 .hero .cta{position:absolute;left:0;right:0;bottom:17%;z-index:5;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;padding:0 20px}
-/* Calage responsive du hero — placé APRÈS les règles de base pour primer
-   sans dépendre de la spécificité. width/left/bottom (+ max-width/margin) sur
-   .hero .photo uniquement, jamais transform (réservé à hUp + parallaxe vidéo). */
-@media (min-width:1280px){
-  .hero .photo{width:100%;max-width:1400px;left:0;right:0;margin-inline:auto;bottom:0}
+/* Calage responsive du hero — placé APRÈS les règles de base pour primer par
+   ordre source. width/left/right/bottom sur .hero .photo (jamais transform :
+   réservé à hUp + parallaxe vidéo). Couverture continue 0 -> +infini. */
+/* Mobile S */
+@media (max-width:479px){
+  .hero .photo{width:130%;left:-12%;right:auto;bottom:28px}
+  .hero .cta{bottom:55%;flex-direction:column;align-items:center;gap:10px}
+  .brand{font-size:51px;text-align:center}
 }
-@media (max-width:767px){
-  .hero .photo{width:123%;left:-10%;bottom:0}
-  .hero .cta{bottom:52%;flex-direction:column;align-items:center;gap:10px}
-  .brand{text-align:center}
+/* Mobile L */
+@media (min-width:480px) and (max-width:767px){
+  .hero .photo{width:124%;left:-11%;right:auto;bottom:19px}
+  .hero .cta{bottom:57%;flex-direction:row;align-items:center}
+  .brand{font-size:60px;text-align:center}
+}
+/* Tablette */
+@media (min-width:768px) and (max-width:1023px){
+  .hero .photo{width:120%;left:-10%;right:auto;bottom:0px}
+  .hero .cta{bottom:17%;flex-direction:row;align-items:center}
+  .brand{font-size:60px;text-align:center}
+}
+/* Laptop */
+@media (min-width:1024px) and (max-width:1279px){
+  .hero .photo{width:102%;left:-2%;right:auto;bottom:-200px}
+  .hero .cta{bottom:17%;flex-direction:row;align-items:center}
+  .brand{font-size:60px;text-align:center}
+}
+/* Desktop */
+@media (min-width:1280px) and (max-width:1599px){
+  .hero .photo{width:100%;left:0%;right:auto;bottom:-200px}
+  .hero .cta{bottom:15%;flex-direction:row;align-items:center}
+  .brand{font-size:60px;text-align:center}
+}
+/* Large */
+@media (min-width:1600px) and (max-width:1919px){
+  .hero .photo{width:100%;left:0%;right:auto;bottom:-200px}
+  .hero .cta{bottom:14%;flex-direction:row;align-items:center}
+  .brand{font-size:60px;text-align:center}
+}
+/* XL */
+@media (min-width:1920px){
+  .hero .photo{width:100%;left:0%;right:auto;bottom:-200px}
+  .hero .cta{bottom:13%;flex-direction:row;align-items:center}
+  .brand{font-size:60px;text-align:center}
 }
 .hero .cta a{font-family:var(--mono);font-weight:400;font-size:11px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;padding:13px 22px;border-radius:999px;backdrop-filter:blur(8px);transition:.2s}
 .cta .p1{background:var(--sig);color:#fff}.cta .p1:hover{transform:translateY(-2px)}
