@@ -119,33 +119,8 @@ body:has(.overlay.open){overflow:hidden}
 /* .hero .scrim removed — top vignette gone, video reads clean */
 .hero .glow{position:absolute;left:50%;top:20%;width:90%;height:60%;transform:translateX(-50%);z-index:1;pointer-events:none;background:radial-gradient(closest-side,rgba(110,182,255,.22),transparent);filter:blur(40px);animation:pulse 6s ease-in-out infinite}
 @keyframes pulse{0%,100%{opacity:.6;transform:translateX(-50%) scale(1)}50%{opacity:1;transform:translateX(-50%) scale(1.1)}}
-.hero .photo{position:absolute;bottom:0;left:0;width:100%;height:auto;display:block;z-index:2}
+.hero .photo{position:absolute;bottom:52px;left:0;width:100%;height:auto;display:block;z-index:2}
 .hero .cta{position:absolute;left:0;right:0;bottom:17%;z-index:5;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;padding:0 20px}
-/* Calage responsive du hero — placé APRÈS les règles de base (.hero/.photo/.cta
-   /.brand) pour primer sans dépendre de la spécificité. width/left/bottom sur
-   .hero .photo uniquement, jamais transform (réservé à hUp + parallaxe vidéo).
-   ≥1280px : aucune de ces MQ ne matche -> règles de base conservées. */
-/* Mobile */
-@media (max-width:767px){
-  .hero{height:79vh}
-  .hero .photo{width:123%;left:-10%;bottom:0}
-  .hero .cta{bottom:58%;flex-direction:column;align-items:center;gap:10px}
-  .brand{font-size:56px;text-align:center}
-}
-/* Tablette */
-@media (min-width:768px) and (max-width:1023px){
-  .hero{height:70vh}
-  .hero .photo{width:120%;left:-9%;bottom:0}
-  .hero .cta{bottom:24%;flex-direction:row;align-items:center}
-  .brand{font-size:56px;text-align:center}
-}
-/* Laptop */
-@media (min-width:1024px) and (max-width:1279px){
-  .hero{height:120vh}
-  .hero .photo{width:104%;left:0;bottom:0}
-  .hero .cta{bottom:19%;flex-direction:row;align-items:center}
-  .brand{font-size:56px;text-align:center}
-}
 .hero .cta a{font-family:var(--mono);font-weight:400;font-size:11px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;padding:13px 22px;border-radius:999px;backdrop-filter:blur(8px);transition:.2s}
 .cta .p1{background:var(--sig);color:#fff}.cta .p1:hover{transform:translateY(-2px)}
 .cta .p2{background:rgba(20,20,20,.4);color:#fff;border:1px solid rgba(255,255,255,.3)}.cta .p2:hover{border-color:#fff}
