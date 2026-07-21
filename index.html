@@ -528,6 +528,16 @@ footer{border-top:1px solid var(--line)}footer .ft{padding:60px 22px 44px;text-a
   function drag(el){let d=0,sx=0,sl=0;el.addEventListener('pointerdown',e=>{d=1;sx=e.pageX;sl=el.scrollLeft;el.classList.add('drag');el.setPointerCapture(e.pointerId)});el.addEventListener('pointermove',e=>{if(!d)return;el.scrollLeft=sl-(e.pageX-sx)});['pointerup','pointercancel','pointerleave'].forEach(ev=>el.addEventListener(ev,()=>{d=0;el.classList.remove('drag')}))}
   drag(document.getElementById('gcar'));
 
+  /* Liens d'ancre : on laisse le scroll natif (smooth via CSS, reduced-motion
+     géré par CSS), puis on retire le #ancre de l'URL une fois le scroll lancé
+     -> URL propre à copier/partager (réouvre le site sur l'intro). replaceState
+     APRÈS le scroll (rAF) : ne l'empêche pas, ne touche pas au sas d'entrée. */
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click',()=>{
+      requestAnimationFrame(()=>{ history.replaceState(null,'',location.pathname+location.search); });
+    });
+  });
+
   /* Bouton remonter en haut : visible après ~600px, scroll doux (auto si reduced-motion) */
   (function(){
     const top=document.getElementById('toTop');
