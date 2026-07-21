@@ -238,8 +238,6 @@ body:has(.overlay.open){overflow:hidden}
 .gcar{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 22px 26px;margin:0 -22px;cursor:grab;scrollbar-width:none;content-visibility:auto;contain-intrinsic-size:auto 60vh}
 .gcar::-webkit-scrollbar{display:none}.gcar.drag{cursor:grabbing}
 .gcar .slide{scroll-snap-align:center;flex:0 0 86%;max-width:760px;aspect-ratio:16/10;border-radius:var(--r);overflow:hidden;border:1px solid var(--line);filter:url(#duo-corail);transition:filter .5s,transform .5s}
-.gcar .slide:nth-child(3n+2){filter:url(#duo-peri)}
-.gcar .slide:nth-child(3n){filter:url(#duo-violet)}
 @media(min-width:900px){.gcar .slide{flex-basis:64%}}.gcar .slide:hover{filter:none;transform:scale(1.01)}
 
 .biowrap{position:relative;max-width:1000px;margin:0 auto}
@@ -247,7 +245,7 @@ body:has(.overlay.open){overflow:hidden}
 .spread{position:relative;z-index:1;display:grid;grid-template-columns:1fr;gap:30px;align-items:center}
 @media(min-width:860px){.spread{grid-template-columns:1.1fr .9fr;gap:50px}}
 .spread .txt{order:2}@media(min-width:860px){.spread .txt{order:0}}
-.spread .ph{order:1;border-radius:var(--r);overflow:hidden;border:1px solid var(--line);aspect-ratio:3/4;filter:url(#duo-peri)}
+.spread .ph{order:1;border-radius:var(--r);overflow:hidden;border:1px solid var(--line);aspect-ratio:3/4;filter:url(#duo-corail)}
 @media(min-width:860px){.spread .ph{transform:translateY(-30px)}}
 .lead{font-family:var(--body);font-weight:700;font-size:clamp(22px,3.4vw,30px);line-height:1.24;color:#fff;margin-bottom:22px}
 .bio p{font-family:var(--body);font-weight:300;font-size:16.5px;line-height:1.75;color:#cfcbc4;margin-bottom:14px}
@@ -329,7 +327,7 @@ footer{border-top:1px solid var(--line)}footer .ft{padding:60px 22px 44px;text-a
 </style></head><body class="hero-anim">
 
 <svg aria-hidden="true" style="position:absolute;width:0;height:0">
- <filter id="duo-corail" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="0.2126 0.7152 0.0722 0 0 0.2126 0.7152 0.0722 0 0 0.2126 0.7152 0.0722 0 0 0 0 0 1 0"/><feComponentTransfer><feFuncR type="table" tableValues="0.071 1"/><feFuncG type="table" tableValues="0.016 0.588"/><feFuncB type="table" tableValues="0.024 0.502"/></feComponentTransfer></filter>
+ <filter id="duo-corail" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="0.2126 0.7152 0.0722 0 0 0.2126 0.7152 0.0722 0 0 0.2126 0.7152 0.0722 0 0 0 0 0 1 0"/><feComponentTransfer><feFuncR type="table" tableValues="0.043 1"/><feFuncG type="table" tableValues="0.008 0.494"/><feFuncB type="table" tableValues="0.012 0.373"/></feComponentTransfer></filter>
  <filter id="duo-peri" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="0.2126 0.7152 0.0722 0 0 0.2126 0.7152 0.0722 0 0 0.2126 0.7152 0.0722 0 0 0 0 0 1 0"/><feComponentTransfer><feFuncR type="table" tableValues="0.031 0.722"/><feFuncG type="table" tableValues="0.047 0.769"/><feFuncB type="table" tableValues="0.149 1"/></feComponentTransfer></filter>
  <filter id="duo-violet" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="0.2126 0.7152 0.0722 0 0 0.2126 0.7152 0.0722 0 0 0.2126 0.7152 0.0722 0 0 0 0 0 1 0"/><feComponentTransfer><feFuncR type="table" tableValues="0.086 0.831"/><feFuncG type="table" tableValues="0.024 0.659"/><feFuncB type="table" tableValues="0.122 1"/></feComponentTransfer></filter>
 </svg>
