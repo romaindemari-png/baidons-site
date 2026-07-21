@@ -121,6 +121,17 @@ body:has(.overlay.open){overflow:hidden}
 @keyframes pulse{0%,100%{opacity:.6;transform:translateX(-50%) scale(1)}50%{opacity:1;transform:translateX(-50%) scale(1.1)}}
 .hero .photo{position:absolute;bottom:0;left:0;width:100%;height:auto;display:block;z-index:2}
 .hero .cta{position:absolute;left:0;right:0;bottom:17%;z-index:5;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;padding:0 20px}
+/* Calage responsive du hero — placé APRÈS les règles de base pour primer
+   sans dépendre de la spécificité. width/left/bottom (+ max-width/margin) sur
+   .hero .photo uniquement, jamais transform (réservé à hUp + parallaxe vidéo). */
+@media (min-width:1280px){
+  .hero .photo{width:100%;max-width:1400px;left:0;right:0;margin-inline:auto;bottom:0}
+}
+@media (max-width:767px){
+  .hero .photo{width:123%;left:-10%;bottom:0}
+  .hero .cta{bottom:52%;flex-direction:column;align-items:center;gap:10px}
+  .brand{text-align:center}
+}
 .hero .cta a{font-family:var(--mono);font-weight:400;font-size:11px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;padding:13px 22px;border-radius:999px;backdrop-filter:blur(8px);transition:.2s}
 .cta .p1{background:var(--sig);color:#fff}.cta .p1:hover{transform:translateY(-2px)}
 .cta .p2{background:rgba(20,20,20,.4);color:#fff;border:1px solid rgba(255,255,255,.3)}.cta .p2:hover{border-color:#fff}
