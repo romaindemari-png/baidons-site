@@ -307,7 +307,27 @@ footer{border-top:1px solid var(--line)}footer .ft{padding:60px 22px 44px;text-a
   .giant .ch{display:inline-block;transform:translateY(60%) rotate(6deg);opacity:0;filter:blur(6px);transition:transform .6s cubic-bezier(.2,.9,.3,1),opacity .6s,filter .6s}
   .giant.on .ch{transform:none;opacity:1;filter:blur(0)}
 }
+.intro{position:fixed;inset:0;z-index:300;background:#161220;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:34px;transition:opacity .8s ease}
+.intro.gone{opacity:0;pointer-events:none}
+.intro-logo{font-family:var(--barlow);font-weight:600;text-transform:uppercase;color:#fff;letter-spacing:.01em;font-size:clamp(40px,9vw,92px);line-height:1}
+.intro-logo .the{color:#f45258}
+.intro-enter{font-family:var(--mono);font-weight:400;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#fff;background:transparent;border:1px solid rgba(255,255,255,.4);border-radius:999px;padding:14px 34px;cursor:pointer;transition:color .2s,border-color .2s}
+.intro-enter:hover{border-color:var(--sig);color:var(--sig)}
+.intro-hint{font-family:var(--mono);font-weight:300;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#6a675f}
+@media (prefers-reduced-motion:no-preference){
+  .intro-logo{animation:introIn 1s .1s both}
+  .intro-enter{animation:introIn 1s .5s both, introPulse 2.4s 1.4s ease-in-out infinite}
+  .intro-hint{animation:introIn 1s .8s both}
+}
+@keyframes introIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@keyframes introPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,79,78,.45)}50%{box-shadow:0 0 0 14px rgba(255,79,78,0)}}
 </style></head><body class="hero-anim">
+
+<div class="intro" id="intro">
+  <div class="intro-logo"><span class="the">THE</span> BAÏDON'S</div>
+  <button class="intro-enter" id="enterBtn">Entrée</button>
+  <div class="intro-hint">Le son se lance à l'entrée</div>
+</div>
 
 <header class="hero">
   <video autoplay muted loop playsinline poster="https://res.cloudinary.com/dcwfwfgg/video/upload/so_0,q_auto,f_jpg/v1784597597/video_hero_baidons_aanmfu.jpg">
@@ -424,6 +444,21 @@ footer{border-top:1px solid var(--line)}footer .ft{padding:60px 22px 44px;text-a
 
 <audio id="bg" loop muted preload="none"><source src="assets/fond-sonore.mp3" type="audio/mpeg"></audio>
 <script>
+  /* Sas d'entrée : masque l'intro + autorise le son via le geste utilisateur */
+  document.body.style.overflow='hidden';
+  const intro=document.getElementById('intro'), enterBtn=document.getElementById('enterBtn');
+  function enterSite(){
+    intro.classList.add('gone');
+    setTimeout(()=>{ intro.style.display='none'; }, 800);
+    document.body.style.overflow='';
+    const bg=document.getElementById('bg');
+    if(bg){ bg.muted=false; bg.play().catch(()=>{}); }
+    const snd=document.getElementById('snd');
+    if(snd){ snd.classList.add('on'); }
+  }
+  enterBtn.addEventListener('click', enterSite);
+  enterBtn.focus();
+
   const snd=document.getElementById('snd'),bg=document.getElementById('bg');
   snd.onclick=(e)=>{e.preventDefault();const on=snd.classList.toggle('on');if(on){bg.muted=false;bg.play().catch(()=>{});}else{bg.muted=true;}};
   const bu=document.getElementById('burger'),ov=document.getElementById('overlay');
