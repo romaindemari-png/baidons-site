@@ -395,5 +395,23 @@ footer{border-top:1px solid var(--line)}footer .ft{padding:60px 22px 44px;text-a
   });
   function drag(el){let d=0,sx=0,sl=0;el.addEventListener('pointerdown',e=>{d=1;sx=e.pageX;sl=el.scrollLeft;el.classList.add('drag');el.setPointerCapture(e.pointerId)});el.addEventListener('pointermove',e=>{if(!d)return;el.scrollLeft=sl-(e.pageX-sx)});['pointerup','pointercancel','pointerleave'].forEach(ev=>el.addEventListener(ev,()=>{d=0;el.classList.remove('drag')}))}
   drag(document.getElementById('gcar'));
+
+  /* GESTE 1 — Parallaxe hero (rAF passive, zéro lib). Utilise la propriété
+     `translate` (indépendante de `transform`) pour ne pas entrer en conflit
+     avec l'animation d'entrée hUp de la photo. */
+  (function(){
+    if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const vid=document.querySelector('.hero video'), photo=document.querySelector('.hero .photo');
+    if(!vid && !photo) return;
+    let ticking=false;
+    function update(){
+      const y=window.scrollY||0;
+      if(vid)   vid.style.translate='0 '+(y*0.10).toFixed(2)+'px';
+      if(photo) photo.style.translate='0 '+(y*-0.04).toFixed(2)+'px';
+      ticking=false;
+    }
+    addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(update);}},{passive:true});
+    update();
+  })();
 </script>
 </body></html>
