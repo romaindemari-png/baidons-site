@@ -460,13 +460,13 @@ footer{border-top:1px solid var(--line)}footer .ft{padding:60px 22px 44px;text-a
     document.body.style.overflow='';
     const bg=document.getElementById('bg');
     if(bg){
-      // Départ garanti au début : on joue d'abord en muet (le média peut
-      // restaurer une position en cache), puis une fois la lecture démarrée
-      // (média seekable) on repositionne à 0 et on démute -> aucun fragment
-      // "du milieu" audible.
-      bg.muted=true;
-      try{ bg.currentTime=0; }catch(e){}
-      bg.play().then(()=>{ bg.currentTime=0; bg.muted=false; }).catch(()=>{});
+      bg.pause(); bg.currentTime=0; bg.muted=false; bg.volume=0;
+      // seek à 0 une fois la lecture démarrée (média seekable) -> départ garanti
+      // au début même si le navigateur a restauré une position en cache
+      bg.play().then(()=>{ bg.currentTime=0; }).catch(()=>{});
+      // fondu entrant ~1.5s
+      let v=0; const target=1;
+      const fade=setInterval(()=>{ v=Math.min(target, v+0.05); bg.volume=v; if(v>=target) clearInterval(fade); }, 75);
     }
     const snd=document.getElementById('snd');
     if(snd){ snd.classList.add('on'); }
