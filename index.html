@@ -452,7 +452,7 @@ footer{border-top:1px solid var(--line)}footer .ft{padding:60px 22px 44px;text-a
     setTimeout(()=>{ intro.style.display='none'; }, 800);
     document.body.style.overflow='';
     const bg=document.getElementById('bg');
-    if(bg){ bg.muted=false; bg.play().catch(()=>{}); }
+    if(bg){ bg.pause(); bg.currentTime=0; bg.muted=false; bg.play().catch(()=>{}); }
     const snd=document.getElementById('snd');
     if(snd){ snd.classList.add('on'); }
   }
