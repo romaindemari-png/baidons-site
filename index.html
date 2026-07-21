@@ -487,6 +487,7 @@ footer{border-top:1px solid var(--line)}footer .ft{padding:60px 22px 44px;text-a
       const ctx=new AC();
       const src=ctx.createMediaElementSource(bg);
       const gain=ctx.createGain();
+      gain.gain.value=0;                 // silence dès la création (pas de fenêtre à gain 1)
       src.connect(gain); gain.connect(ctx.destination);
       audioGraph={ctx,gain};
     }catch(e){ audioGraph=false; }
@@ -499,21 +500,19 @@ footer{border-top:1px solid var(--line)}footer .ft{padding:60px 22px 44px;text-a
     window.scrollTo(0,0);                 // le scroll vient d'être rendu -> forcer le haut
     const bg=document.getElementById('bg');
     if(bg){
-      bg.pause(); bg.currentTime=0; bg.muted=false;
       const g=ensureAudioGraph(bg);
-      // silence immédiat (gain 0) avant lecture : GainNode si Web Audio, sinon volume
-      if(g){ g.ctx.resume(); const t=g.ctx.currentTime; g.gain.gain.cancelScheduledValues(t); g.gain.gain.setValueAtTime(0,t); }
+      if(g){ g.ctx.resume(); }                  // gain déjà à 0 (fixé à la création)
       else { bg.volume=0; }
+      bg.muted=false;
+      bg.load();                                // reset propre au début, à l'arrêt (pas de seek en lecture)
       bg.play().then(()=>{
-        bg.currentTime=0;                       // départ garanti à 0
         if(g){
-          // on maintient le gain à 0 pendant 150ms (masque le transitoire de
-          // démarrage/seek), PUIS fondu entrant ~1.5s -> plus de click au lancement
+          // hold à 0 (~120ms) pour masquer tout transitoire de démarrage, puis fondu ~1.5s
           const t=g.ctx.currentTime;
           g.gain.gain.cancelScheduledValues(t);
           g.gain.gain.setValueAtTime(0,t);
-          g.gain.gain.setValueAtTime(0,t+0.15);
-          g.gain.gain.linearRampToValueAtTime(1,t+0.15+1.5);
+          g.gain.gain.setValueAtTime(0,t+0.12);
+          g.gain.gain.linearRampToValueAtTime(1,t+0.12+1.5);
         }
         else { let v=0; const fade=setInterval(()=>{ v=Math.min(1,v+0.05); bg.volume=v; if(v>=1) clearInterval(fade); },75); }
       }).catch(()=>{});
