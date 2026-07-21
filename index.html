@@ -455,12 +455,14 @@ footer{border-top:1px solid var(--line)}footer .ft{padding:60px 22px 44px;text-a
 <audio id="bg" loop muted preload="none"><source src="assets/fond-sonore.mp3" type="audio/mpeg"></audio>
 <script>
   /* Sas d'entrée : masque l'intro + autorise le son via le geste utilisateur */
+  if('scrollRestoration' in history){ history.scrollRestoration='manual'; }
   document.body.style.overflow='hidden';
   const intro=document.getElementById('intro'), enterBtn=document.getElementById('enterBtn');
   function enterSite(){
     intro.classList.add('gone');
     setTimeout(()=>{ intro.style.display='none'; }, 750);
     document.body.style.overflow='';
+    window.scrollTo(0,0);                 // le scroll vient d'être rendu -> forcer le haut
     const bg=document.getElementById('bg');
     if(bg){
       bg.pause(); bg.currentTime=0; bg.muted=false; bg.volume=0;
