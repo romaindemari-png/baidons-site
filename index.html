@@ -157,6 +157,8 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:80;opa
 .bk-form input,.bk-form textarea{background:#151515;border:1px solid #333;border-radius:10px;padding:12px 14px;color:#fff;font-family:var(--mono);font-weight:300;font-size:13px;width:100%}
 .bk-form textarea{min-height:84px;resize:vertical}
 .bk-form button{background:var(--sig);border:none;border-radius:10px;padding:13px;color:#fff;font-family:var(--mono);font-weight:400;font-size:12px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
+.bk-form button[disabled]{opacity:.6;cursor:default}
+.form-status{font-family:var(--mono);font-weight:300;font-size:12px;line-height:1.5;color:var(--sig);margin:2px 0 0}
 
 footer{border-top:1px solid var(--line)}footer .ft{padding:60px 22px 44px;text-align:center}
 .f-mark{font-family:var(--barlow);font-weight:700;text-transform:uppercase;font-size:clamp(44px,9vw,92px);color:#fff;letter-spacing:.01em}
@@ -272,16 +274,27 @@ footer{border-top:1px solid var(--line)}footer .ft{padding:60px 22px 44px;text-a
       <div class="bk-contact"><a class="bk-mail" href="mailto:booking@thebaidons.fr">booking@thebaidons.fr</a></div>
       <div class="bk-soc"><a href="#">Instagram</a><a href="#">Facebook</a><a href="#">YouTube</a></div>
     </div>
-    <div class="bk-form">
-      <input placeholder="Nom / structure"><input placeholder="Email"><input placeholder="Date & lieu envisagés"><textarea placeholder="Votre projet en deux mots"></textarea><button>Envoyer la demande</button>
-    </div>
+    <form class="bk-form" name="booking" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="booking">
+      <p class="hp" hidden aria-hidden="true"><label>Ne pas remplir : <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+      <input name="nom" aria-label="Nom ou structure" placeholder="Nom / structure" required>
+      <input type="email" name="email" aria-label="Votre email" placeholder="Email" required>
+      <input name="date-lieu" aria-label="Date et lieu envisagés" placeholder="Date & lieu envisagés">
+      <textarea name="message" aria-label="Votre projet en deux mots" placeholder="Votre projet en deux mots" required></textarea>
+      <button type="submit">Envoyer la demande</button>
+      <p class="form-status" role="status" aria-live="polite" hidden></p>
+    </form>
   </div>
 </section>
 
 <footer>
   <div class="ft">
     <div class="f-mark rv">The Baïdon's</div>
-    <div class="news"><input placeholder="ton email"><button>OK</button></div>
+    <form class="news" name="newsletter" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="newsletter">
+      <p class="hp" hidden aria-hidden="true"><label>Ne pas remplir : <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+      <input type="email" name="email" aria-label="Ton email" placeholder="ton email" required><button type="submit">OK</button>
+    </form>
     <div class="f-links"><a href="#concerts">Concerts</a><a href="#groupe">Le groupe</a><a href="#ecouter">Écouter</a><a href="#live">Plein les yeux</a><a href="#galerie">Sur le vif</a><a href="#booking">Booking</a></div>
     <div class="f-cr">© 2026 The Baïdon's — Marseille · Site LeStud</div>
   </div>
@@ -302,6 +315,22 @@ footer{border-top:1px solid var(--line)}footer .ft{padding:60px 22px 44px;text-a
   document.querySelectorAll('.rv').forEach(el=>io.observe(el));
   const cass=document.getElementById('cass'),ct=document.getElementById('casstrack');
   document.querySelectorAll('#tracks .trk').forEach((t,i)=>t.onclick=()=>{document.querySelectorAll('#tracks .trk').forEach(x=>{x.classList.remove('active');x.setAttribute('aria-pressed','false');});t.classList.add('active');t.setAttribute('aria-pressed','true');const name=t.querySelector('.tt').textContent;ct.textContent=(i===0?'Face A':'Face B')+' · '+name;cass.classList.add('playing');});
+  document.querySelectorAll('form[data-netlify]').forEach(f=>{
+    f.addEventListener('submit',async(e)=>{
+      e.preventDefault();
+      const btn=f.querySelector('button[type=submit]')||f.querySelector('button');
+      const body=new URLSearchParams(new FormData(f)).toString();
+      if(btn)btn.disabled=true;
+      try{
+        await fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body});
+        f.querySelectorAll('input:not([type=hidden]),textarea').forEach(i=>i.value='');
+        const st=f.querySelector('.form-status');
+        if(st){st.hidden=false;st.textContent='Merci — message bien reçu. On revient vers vous très vite.';}
+        if(f.name==='newsletter'&&btn){btn.textContent='✓';btn.disabled=true;}
+        else if(btn){btn.disabled=false;}
+      }catch(err){f.submit();}
+    });
+  });
   function drag(el){let d=0,sx=0,sl=0;el.addEventListener('pointerdown',e=>{d=1;sx=e.pageX;sl=el.scrollLeft;el.classList.add('drag');el.setPointerCapture(e.pointerId)});el.addEventListener('pointermove',e=>{if(!d)return;el.scrollLeft=sl-(e.pageX-sx)});['pointerup','pointercancel','pointerleave'].forEach(ev=>el.addEventListener(ev,()=>{d=0;el.classList.remove('drag')}))}
   drag(document.getElementById('gcar'));
 </script>
