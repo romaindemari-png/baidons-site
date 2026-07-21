@@ -121,6 +121,9 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:80;opa
 .trk .tt{font-family:var(--body);font-weight:600;font-size:15px;color:#fff}.trk .to{font-family:var(--mono);font-weight:300;font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--dim)}
 .trk.active .tt{color:var(--sig)}.trk .td{margin-left:auto;font-family:var(--mono);font-weight:300;font-size:11px;color:var(--dim)}
 .plats{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+/* C3 : masque les liens streaming/sociaux tant qu'ils sont morts (href="#").
+   Sélecteur d'attribut -> réapparaissent dès qu'une vraie URL est renseignée. */
+.plats a[href="#"],.bk-soc a[href="#"]{display:none}
 .plat{font-family:var(--mono);font-weight:300;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);text-decoration:none;border:1px solid #333;border-radius:999px;padding:10px 16px;transition:.2s}
 .plat:hover{border-color:var(--sig);color:#fff;background:rgba(255,79,78,.12)}
 
