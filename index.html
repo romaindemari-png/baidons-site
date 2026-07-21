@@ -327,14 +327,18 @@ footer{border-top:1px solid var(--line)}footer .ft{padding:60px 22px 44px;text-a
 .intro.gone .intro-inner{opacity:0}
 .intro-logo{font-family:var(--barlow);font-weight:600;text-transform:uppercase;color:#fff;letter-spacing:.01em;font-size:clamp(40px,9vw,92px);line-height:1}
 .intro-logo .the{color:#f45258}
-.intro-enter{font-family:var(--mono);font-weight:400;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#fff;background:transparent;border:1px solid rgba(255,255,255,.4);border-radius:999px;padding:14px 34px;cursor:pointer;transition:color .2s,border-color .2s}
+.intro-enter{position:relative;font-family:var(--mono);font-weight:400;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#fff;background:transparent;border:1px solid rgba(255,255,255,.4);border-radius:999px;padding:14px 34px;cursor:pointer;transition:color .2s,border-color .2s}
 .intro-enter:hover{border-color:var(--sig);color:var(--sig)}
 @media (prefers-reduced-motion:no-preference){
   .intro-logo{animation:introIn 1s .1s both}
-  .intro-enter{animation:introIn 1s .5s both, introPulse 2.4s 1.4s ease-in-out infinite}
+  .intro-enter{animation:introIn 1s .5s both}
+  /* Pouls via un anneau ::after : box-shadow STATIQUE (dessiné une fois) animé
+     en transform+opacity (compositable GPU) -> pas de couture/trait sur le pill
+     (contrairement à un box-shadow spread animé, buggé sur Safari iOS). */
+  .intro-enter::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:0 0 0 1.5px rgba(255,79,78,.55);opacity:0;pointer-events:none;will-change:transform,opacity;animation:introPulse 2.4s 1.4s ease-in-out infinite}
 }
 @keyframes introIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
-@keyframes introPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,79,78,.45)}50%{box-shadow:0 0 0 14px rgba(255,79,78,0)}}
+@keyframes introPulse{0%{transform:scale(1);opacity:.55}100%{transform:scale(1.45);opacity:0}}
 </style></head><body class="hero-anim">
 
 <svg aria-hidden="true" style="position:absolute;width:0;height:0">
