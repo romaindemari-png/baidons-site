@@ -125,7 +125,9 @@ body:has(.overlay.open){overflow:hidden}
    sans dépendre de la spécificité. width/left/bottom (+ max-width/margin) sur
    .hero .photo uniquement, jamais transform (réservé à hUp + parallaxe vidéo). */
 @media (min-width:1280px){
-  .hero .photo{width:100%;max-width:1400px;left:0;right:0;margin-inline:auto;bottom:0}
+  /* .photo EST l'<img> (pas de conteneur) : object-fit/height posés dessus.
+     width+height explicites -> boîte déterministe, pas de CLS. Pas de transform. */
+  .hero .photo{width:100%;left:0;right:0;bottom:0;height:70vh;object-fit:cover;object-position:top center}
 }
 @media (max-width:767px){
   .hero .photo{width:123%;left:-10%;bottom:0}
