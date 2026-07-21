@@ -501,13 +501,20 @@ footer{border-top:1px solid var(--line)}footer .ft{padding:60px 22px 44px;text-a
     if(bg){
       bg.pause(); bg.currentTime=0; bg.muted=false;
       const g=ensureAudioGraph(bg);
-      // départ à 0 (silence) avant lecture : GainNode si Web Audio, sinon volume
+      // silence immédiat (gain 0) avant lecture : GainNode si Web Audio, sinon volume
       if(g){ g.ctx.resume(); const t=g.ctx.currentTime; g.gain.gain.cancelScheduledValues(t); g.gain.gain.setValueAtTime(0,t); }
       else { bg.volume=0; }
-      // seek à 0 une fois la lecture démarrée (média seekable) puis fondu entrant ~1.5s
       bg.play().then(()=>{
-        bg.currentTime=0;
-        if(g){ const t=g.ctx.currentTime; g.gain.gain.setValueAtTime(0,t); g.gain.gain.linearRampToValueAtTime(1,t+1.5); }
+        bg.currentTime=0;                       // départ garanti à 0
+        if(g){
+          // on maintient le gain à 0 pendant 150ms (masque le transitoire de
+          // démarrage/seek), PUIS fondu entrant ~1.5s -> plus de click au lancement
+          const t=g.ctx.currentTime;
+          g.gain.gain.cancelScheduledValues(t);
+          g.gain.gain.setValueAtTime(0,t);
+          g.gain.gain.setValueAtTime(0,t+0.15);
+          g.gain.gain.linearRampToValueAtTime(1,t+0.15+1.5);
+        }
         else { let v=0; const fade=setInterval(()=>{ v=Math.min(1,v+0.05); bg.volume=v; if(v>=1) clearInterval(fade); },75); }
       }).catch(()=>{});
     }
