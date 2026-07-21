@@ -134,6 +134,10 @@ body:has(.overlay.open){overflow:hidden}
   .hero .cta{bottom:52%;flex-direction:column;align-items:center;gap:10px}
   .brand{text-align:center}
 }
+/* Tablette : CTA côte à côte, en bas (explicite ; ≥768 la colonne ne fuite pas) */
+@media (min-width:768px) and (max-width:1023px){
+  .hero .cta{bottom:17%;flex-direction:row;align-items:center}
+}
 .hero .cta a{font-family:var(--mono);font-weight:400;font-size:11px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;padding:13px 22px;border-radius:999px;backdrop-filter:blur(8px);transition:.2s}
 .cta .p1{background:var(--sig);color:#fff}.cta .p1:hover{transform:translateY(-2px)}
 .cta .p2{background:rgba(20,20,20,.4);color:#fff;border:1px solid rgba(255,255,255,.3)}.cta .p2:hover{border-color:#fff}
