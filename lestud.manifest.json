@@ -1,0 +1,15 @@
+{
+  "manifest_version": "1.0",
+  "client": { "name": "The Baïdon's", "slug": "baidons" },
+  "repo": { "github": "romaindemari-png/baidons-site", "default_branch": "main" },
+  "deploy": {
+    "provider": "netlify",
+    "site_name": "baidons-site",
+    "url": "https://baidons-site.netlify.app",
+    "publish_dir": "."
+  },
+  "offer": { "stage": "vitrine", "is_fork": false },
+  "template": { "base_repo": null, "family": "sonore", "version": null },
+  "separation": null,
+  "instagram": null
+}
