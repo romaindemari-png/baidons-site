@@ -48,8 +48,7 @@ Repo romaindemari-png/baidons-site → baidons-site.netlify.app
 ## Backlog
 ### Bloquant avant toute promo
 - Les 6 dates des cards sont FICTIVES (exemples de maquette) → à remplacer par les vraies. Le JSON-LD MusicEvent ne couvre que 4 events (les 2 dernières cards ne sont pas décrites).
-- Numéro WhatsApp : le placeholder A ÉTÉ remplacé → `wa.me/33660903143`. À confirmer que c'est le bon numéro.
-- Domaine thebaidons.fr : OG/canonical/og:url pointent DÉJÀ sur `baidons-site.netlify.app` (pas de placeholder à ce niveau). `thebaidons.fr` ne subsiste que dans l'email de booking du JSON-LD (`booking@thebaidons.fr`) → confirmer le domaine/email ou basculer.
+- Domaine thebaidons.fr : OG/canonical/og:url pointent DÉJÀ sur `baidons-site.netlify.app` (pas de placeholder à ce niveau). `booking@thebaidons.fr` dans le JSON-LD est un placeholder inventé — le groupe n'a pas de domaine. Adresse fausse et indexable par Google : à remplacer par la vraie adresse de booking, ou à retirer du JSON-LD en attendant.
 
 ### En attente du contenu du groupe
 - Vrai audio dans « Écouter » + branchement des pistes de la tracklist
