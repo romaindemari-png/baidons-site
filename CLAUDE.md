@@ -1,4 +1,4 @@
-# BAIDONS.md — contexte projet
+# The Baïdon's — contexte projet
 
 Site vitrine de The Baïdon's (reprises rock/garage/funk/psyché, Marseille). Réalisé par LeStud.
 Repo romaindemari-png/baidons-site → baidons-site.netlify.app
